@@ -1,53 +1,80 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 (setq default-directory "~/Documents/")
-(setq doom-file-name-case 'capitalize)
-(setq-default tab-width 4)
-(setq-default evil-shift-width 4)
-(setq-default shift-select-mode t)
-(setq-default pc-selection-mode t)
+(global-auto-revert-mode 1) ;;auto-reload if changed externally
+(setq-default tab-width 2)
+(setq-default evil-shift-width 2)
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14 :weight 'normal))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'normal))
 (setq doom-variable-pitch-font (font-spec :family "Roboto" :size 14 :weight 'normal))
-(setq doom-theme 'doom-dracula)
-(custom-set-faces
- '(org-link ((t (:underline nil)))))
+(custom-set-faces '(org-link ((t (:underline nil)))))
 
-(setq initial-frame-alist '((left-fringe . 0) (right-fringe . 0)))
-(setq default-frame-alist '(
-    (left . 1280)
-    (top . 30)
-    (width . 142)
-    (height . 41)
-    (internal-border-width . 1)
-    (drag-internal-border . 1)
-    (user-position . t)
-    (undecorated . t)))
+;;Keybinds
+(cua-mode t) ;;Copy/Cut/Paste
+(setq cua-enable-cua-keys t
+      cua-keep-region-after-copy t)
+(setq select-enable-clipboard t
+      select-enable-primary t
+      save-interprogram-paste-before-kill t)
+(setq-default shift-select-mode t) ;;Shift+arrows select
+(setq-default delete-selection-mode t) ;;Typing replaces selection
+(map! :nvi
+      "C-a" #'mark-whole-buffer
+      "C-s" #'save-buffer
+      "C-f" #'consult-line
+      "C-S-z" #'undo-redo
+      "C-S-v" #'evil-visual-block
+      "M-<up>" #'drag-stuff-up
+      "M-<down>" #'drag-stuff-down)
 
-(setq dired-find-subdir t) ;stop making new buffers
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(use-package! drag-stuff
+  :config
+  (drag-stuff-global-mode 1))
 
-(use-package-hook! evil
-  :pre-init
-    (setq evil-respect-visual-line-mode t))
+;; Make shift+arrows work for selection even in evil
+(define-key evil-insert-state-map (kbd "S-<left>") nil)
+(define-key evil-insert-state-map (kbd "S-<right>") nil)
+(define-key evil-insert-state-map (kbd "S-<up>") nil)
+(define-key evil-insert-state-map (kbd "S-<down>") nil)
 
-(after! treemacs
-  (if (eq system-type 'windows-nt)
-      (setq treemacs-python-executable "C:\\Python312\\python.exe")
-      (setq treemacs-python-executable "/usr/bin/python.exe"))
-)
+(define-key evil-normal-state-map (kbd "S-<left>") nil)
+(define-key evil-normal-state-map (kbd "S-<right>") nil)
+(define-key evil-normal-state-map (kbd "S-<up>") nil)
+(define-key evil-normal-state-map (kbd "S-<down>") nil)
 
-(after! ispell
-    (setq ispell-program-name "hunspell")
-    (setq ispell-dictionary "en_CA")
-    (setq ispell-hunspell-dict-paths-alist
-        '(("en_CA" "C:\\Hunspell\\en_CA.aff")
-          ("en_CA" "/usr/share/hunspell")))
-)
+;;Theme
+(setq doom-theme 'catppuccin)
+(setq catppuccin-flavor 'macchiato) ; 'frappe, latte, macchiato, or mocha
+(defun my/set-catppuccin (flavor)
+  (interactive
+   (list (intern
+          (completing-read
+           "Catppuccin flavor: "
+           '(latte frappe macchiato mocha)))))
+  (setq catppuccin-flavor flavor)
+  (load-theme 'catppuccin t))
+(map! :leader
+      :desc "Set Catppuccin flavor"
+      "t C" #'my/set-catppuccin)
 
-(after! markdown-live-preview
-  '(progn
-     (setq markdown-live-preview-window-location 'right)))
+;;Project explorer opens and closes automatically with window size
+(defun my/toggle-treemacs-based-on-width (&rest _)
+  (if (> (frame-pixel-width) (/ (display-pixel-width) 2))
+      (treemacs)
+    (treemacs-quit)))
+
+;;(add-hook 'window-size-change-functions #'my/toggle-treemacs-based-on-width)
+(add-hook 'doom-switch-project-hook #'treemacs)
+(setq treemacs-width 30)
+
+;;Breadcrumbs
+(setq lsp-headerline-breadcrumb-enable t)
+(setq which-func-unknown "⊘")
+(setq-default header-line-format
+              '(:eval
+                (when (bound-and-true-p which-function-mode)
+                  (format "  %s"
+                          (or (which-function) "")))))
 
 ;;ORG ROAM
 (setq org-directory "~/Documents/Notes/")
@@ -55,6 +82,8 @@
 (setq org-roam-dailies-directory "~/Documents/Notes/Journal")
 (setq org-agenda-files '("~/Documents/Notes/Journal"))
 (setq org-roam-completion-everywhere t)
+(setq org-startup-with-inline-images t
+      org-image-actual-width '(300))
 
 (setq org-roam-capture-templates
        '(("f" "Fleeting" plain (file "./Roaming/Fleeting.org")
@@ -87,13 +116,6 @@
           :unnarrowed f)
         ))
 
-(after! citar
-    (setq citar-bibliography '("~/Documents/Notes/References/Zotero.bib"))
-    (setq citar-notes-paths '("~/Documents/Notes/References"))
-    (setq citar-file-note-extensions '("org" "md"))
-    (setq citar-notes-template "")
-    (setq bibtex-completion-bibliogrpahy citar-bibliography))
-
 (use-package! websocket
   :after org-roam)
 
@@ -105,48 +127,15 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-(defun org-wikipedia-link ()
-  "Replace the selected text or word at point with a Wikipedia link."
+(defun my/org-wikipedia-link ()
   (interactive)
   (let* ((word (if (use-region-p)
-                   (buffer-substring (region-beginning) (region-end))
-                 (thing-at-point 'word)))
-         (word (if word (replace-regexp-in-string " " "_" word)
-                  (read-string "Enter the word: "))))
-        (when word
-            (if (use-region-p)
-                (delete-active-region)
-                (progn (kill-word 1)))
-            (insert (format "[[%s][Wikipedia]]" (concat "https://en.wikipedia.org/wiki/" word))))))
+                   (buffer-substring-no-properties
+                    (region-beginning) (region-end))
+                 (thing-at-point 'word t))))
+    (unless word
+      (setq word (read-string "Enter word: ")))
+    (when (use-region-p) (delete-region (region-beginning) (region-end)))
+    (insert (format "[[https://en.wikipedia.org/wiki/%s][Wikipedia]]"
+                    (replace-regexp-in-string " " "_" word)))))
 
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
-;;
-;;   (after! PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
