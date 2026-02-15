@@ -63,8 +63,8 @@
       (treemacs)
     (treemacs-quit)))
 
-;;(add-hook 'window-size-change-functions #'my/toggle-treemacs-based-on-width)
-(add-hook 'doom-switch-project-hook #'treemacs)
+(after! treemacs
+  (add-hook 'doom-switch-project-hook #'treemacs-add-and-display-current-project-exclusively))
 (setq treemacs-width 30)
 
 ;;Breadcrumbs
@@ -75,6 +75,10 @@
                 (when (bound-and-true-p which-function-mode)
                   (format "  %s"
                           (or (which-function) "")))))
+
+;;Nix
+(after! nix-mode
+  (setq nix-nixfmt-bin "alejandra"))
 
 ;;ORG ROAM
 (setq org-directory "~/Documents/Notes/")
