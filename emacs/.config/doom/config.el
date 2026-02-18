@@ -9,7 +9,8 @@
 (setq doom-variable-pitch-font (font-spec :family "Roboto" :size 14 :weight 'normal))
 (custom-set-faces '(org-link ((t (:underline nil)))))
 (setq scroll-conservatively 10
-      scroll-margin 15)
+      scroll-margin 15
+      pixel-scroll-precision-mode t)
 
 ;;Keybinds
 (cua-mode t) ;;Copy/Cut/Paste
