@@ -22,7 +22,6 @@
  vi-tilde-fringe     ; fringe tildes to mark beyond EOB
  ;;workspaces          ; tab emulation, persistence & separate workspaces
  (vc-gutter +pretty) ; vcs diff in the fringe
- (smooth-scroll +interpolate) ; so smooth you won't believe it's not butter
 
  :editor
  (evil +everywhere); come to the dark side, we have cookies
