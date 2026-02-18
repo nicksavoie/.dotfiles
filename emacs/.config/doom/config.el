@@ -59,7 +59,7 @@
 
 
 ;;Tab bar
-(after! centaur-tabs
+(after! (centaur-tabs projectile)
   (setq centaur-tabs-style "bar"
         centaur-tabs-height 28
         centaur-tabs-set-bar 'under
@@ -69,22 +69,11 @@
         centaur-tabs-modified-marker "●"
         centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-icon-type 'nerd-icons
-        centaur-tabs-set-icons t)
-  (setq centaur-tabs-buffer-list-function
-        #'centaur-tabs-buffer-list)
-  (setq centaur-tabs-show-new-tab-button nil)
+        centaur-tabs-set-icons t
+        centaur-tabs-show-new-tab-button nil
+        centaur-tabs-buffer-list-function #'centaur-tabs-buffer-list)
   (centaur-tabs-headline-match)
-
-  ;; Clean up faces (modern flat look)
-  (custom-set-faces!
-    '(centaur-tabs-selected
-      ((t (:inherit default :weight bold))))
-    '(centaur-tabs-unselected
-      ((t (:inherit default :foreground "#777777"))))
-    '(centaur-tabs-selected-modified
-      ((t (:inherit centaur-tabs-selected))))
-    '(centaur-tabs-unselected-modified
-      ((t (:inherit centaur-tabs-unselected))))))
+  (centaur-tabs-group-by-projectile-project))
 
 ;;Project explorer
 (after! treemacs
