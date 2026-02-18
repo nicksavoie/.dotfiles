@@ -60,15 +60,54 @@
       :desc "Set Catppuccin flavor"
       "t C" #'my/set-catppuccin)
 
-;;Project explorer opens and closes automatically with window size
-(defun my/toggle-treemacs-based-on-width (&rest _)
-  (if (> (frame-pixel-width) (/ (display-pixel-width) 2))
-      (treemacs)
-    (treemacs-quit)))
 
+;;Tab bar
+(after! centaur-tabs
+  (setq centaur-tabs-style "bar"
+        centaur-tabs-height 28
+        centaur-tabs-set-bar 'under
+        centaur-tabs-set-close-button nil
+        centaur-tabs-show-navigation-buttons nil
+        centaur-tabs-set-modified-marker t
+        centaur-tabs-modified-marker "●"
+        centaur-tabs-gray-out-icons 'buffer
+        centaur-tabs-icon-type 'nerd-icons
+        centaur-tabs-set-icons t)
+  (setq centaur-tabs-buffer-list-function
+        #'centaur-tabs-buffer-list)
+  (centaur-tabs-group-by-projectile-project)
+  (setq centaur-tabs-show-new-tab-button nil)
+  (centaur-tabs-headline-match)
+
+  ;; Clean up faces (modern flat look)
+  (custom-set-faces!
+    '(centaur-tabs-selected
+      ((t (:inherit default :weight bold))))
+    '(centaur-tabs-unselected
+      ((t (:inherit default :foreground "#777777"))))
+    '(centaur-tabs-selected-modified
+      ((t (:inherit centaur-tabs-selected))))
+    '(centaur-tabs-unselected-modified
+      ((t (:inherit centaur-tabs-unselected))))))
+
+;;Project explorer
 (after! treemacs
-  (add-hook 'doom-switch-project-hook #'treemacs-add-and-display-current-project-exclusively))
-(setq treemacs-width 30)
+  ;; --- Behavior ---
+  (treemacs-follow-mode 1)
+  (treemacs-filewatch-mode 1)
+  (treemacs-fringe-indicator-mode -1)
+
+  ;; Don't let treemacs steal focus
+  (treemacs-is-never-other-window t)
+
+  ;; Fixed width like VSCode
+  (setq treemacs-width 32)
+
+  ;; Always open on project switch (but don't select it)
+  (add-hook 'projectile-after-switch-project-hook
+            (lambda ()
+              (treemacs-add-and-display-current-project-exclusively)
+              (other-window 1))))
 
 ;;Breadcrumbs
 (setq lsp-headerline-breadcrumb-enable t)
