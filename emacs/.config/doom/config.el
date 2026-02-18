@@ -86,9 +86,6 @@
     '(centaur-tabs-unselected-modified
       ((t (:inherit centaur-tabs-unselected))))))
 
-(after! projectile
-  (centaur-tabs-group-by-projectile-project))
-
 ;;Project explorer
 (after! treemacs
   ;; --- Behavior ---
