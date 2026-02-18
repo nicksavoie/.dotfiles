@@ -60,9 +60,8 @@
 
 ;;Tab bar
 (after! (centaur-tabs projectile)
-  (setq centaur-tabs-style "bar"
-        centaur-tabs-height 28
-        centaur-tabs-set-bar 'under
+  (setq centaur-tabs-style "alternate"
+        centaur-tabs-height 32
         centaur-tabs-set-close-button nil
         centaur-tabs-show-navigation-buttons nil
         centaur-tabs-set-modified-marker t
@@ -73,7 +72,12 @@
         centaur-tabs-show-new-tab-button nil
         centaur-tabs-buffer-list-function #'centaur-tabs-buffer-list)
   (centaur-tabs-headline-match)
-  (centaur-tabs-group-by-projectile-project))
+  (centaur-tabs-group-by-projectile-project)
+  (custom-set-faces!
+    '(centaur-tabs-selected :inherit default :weight bold)
+    '(centaur-tabs-unselected :inherit default :foreground "#777777")
+    '(centaur-tabs-selected-modified :inherit centaur-tabs-selected)
+    '(centaur-tabs-unselected-modified :inherit centaur-tabs-unselected)))
 
 ;;Project explorer
 (after! treemacs
