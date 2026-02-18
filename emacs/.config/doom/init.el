@@ -20,7 +20,7 @@
  tabs                ; Tab bar
  (treemacs +lsp)     ; a project drawer, like neotree but cooler
  vi-tilde-fringe     ; fringe tildes to mark beyond EOB
- ;;workspaces          ; tab emulation, persistence & separate workspaces
+ workspaces          ; tab emulation, persistence & separate workspaces
  (vc-gutter +pretty) ; vcs diff in the fringe
 
  :editor
