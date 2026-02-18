@@ -5,12 +5,23 @@
 (setq-default tab-width 2)
 (setq-default evil-shift-width 2)
 (setq display-line-numbers-type t)
+
+;;Theme
+(setq doom-theme 'catppuccin)
+(setq catppuccin-flavor 'macchiato) ; 'frappe, latte, macchiato, or mocha
+(defun my/set-catppuccin (flavor)
+  (interactive
+   (list (intern
+          (completing-read
+           "Catppuccin flavor: "
+           '(latte frappe macchiato mocha)))))
+  (setq catppuccin-flavor flavor)
+  (load-theme 'catppuccin t))
+(map! :leader
+      :desc "Set Catppuccin flavor"
+      "t C" #'my/set-catppuccin)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'normal))
 (setq doom-variable-pitch-font (font-spec :family "Roboto" :size 14 :weight 'normal))
-(custom-set-faces '(org-link ((t (:underline nil)))))
-(setq scroll-conservatively 101
-      scroll-margin 0
-      pixel-scroll-precision-mode t)
 
 ;;Keybinds
 (cua-mode t) ;;Copy/Cut/Paste
@@ -45,21 +56,13 @@
 (define-key evil-normal-state-map (kbd "S-<up>") nil)
 (define-key evil-normal-state-map (kbd "S-<down>") nil)
 
-;;Theme
-(setq doom-theme 'catppuccin)
-(setq catppuccin-flavor 'macchiato) ; 'frappe, latte, macchiato, or mocha
-(defun my/set-catppuccin (flavor)
-  (interactive
-   (list (intern
-          (completing-read
-           "Catppuccin flavor: "
-           '(latte frappe macchiato mocha)))))
-  (setq catppuccin-flavor flavor)
-  (load-theme 'catppuccin t))
-(map! :leader
-      :desc "Set Catppuccin flavor"
-      "t C" #'my/set-catppuccin)
-
+;;Scrolling
+(pixel-scroll-precision-mode 1)
+(setq scroll-conservatively 101       ;; never recenter point unnecessarily
+      scroll-margin 0                ;; no top/bottom margin
+      scroll-step 1                  ;; scroll one line at a time
+      mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;; scroll 1 line per wheel notch
+      mouse-wheel-progressive-speed nil)
 
 ;;Tab bar
 (after! (centaur-tabs projectile)
