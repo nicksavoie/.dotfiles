@@ -60,25 +60,59 @@
 
 ;;Tab bar
 (after! (centaur-tabs projectile)
-  (setq ;centaur-tabs-style "alternate"
-        ;centaur-tabs-height 32
-        ;centaur-tabs-set-close-button nil
-        ;centaur-tabs-show-navigation-buttons nil
-        centaur-tabs-set-modified-marker t
-        ;centaur-tabs-modified-marker "●"
-        ;centaur-tabs-gray-out-icons 'buffer
-        ;centaur-tabs-icon-type 'nerd-icons
-        centaur-tabs-set-icons t
-        ;centaur-tabs-show-new-tab-button nil
-       ;centaur-tabs-buffer-list-function #'centaur-tabs-buffer-list
-        )
-  (centaur-tabs-headline-match)
-  (centaur-tabs-group-by-projectile-project)
+  (setq centaur-tabs-style "bar"            ;; keep flat base
+      centaur-tabs-set-bar 'over         ;; underline active tab
+      centaur-tabs-height 30
+      centaur-tabs-set-icons t
+      centaur-tabs-close-button "✕"
+      centaur-tabs-modified-marker "•")
   (custom-set-faces!
-    '(centaur-tabs-selected :inherit default :weight bold)
-    '(centaur-tabs-unselected :inherit default :foreground "#777777")
-    '(centaur-tabs-selected-modified :inherit centaur-tabs-selected)
-    '(centaur-tabs-unselected-modified :inherit centaur-tabs-unselected)))
+ ;; Default tabs
+ '(centaur-tabs-default ((t (:background ,(doom-color 'bg)
+                                         :foreground ,(doom-color 'fg)
+                                         :box (:line-width 2 :color ,(doom-color 'bg)
+                                               :style released-button)
+                                         :overline nil
+                                         :underline nil
+                                         :strike-through nil
+                                         :weight normal))))
+ ;; Selected tab
+ '(centaur-tabs-selected ((t (:background ,(doom-color 'bg-alt)
+                                           :foreground ,(doom-color 'fg)
+                                           :box (:line-width 2 :color ,(doom-color 'fg)
+                                                 :style released-button)
+                                           :overline nil
+                                           :underline nil
+                                           :weight bold))))
+ ;; Unselected tabs
+ '(centaur-tabs-unselected ((t (:background ,(doom-color 'bg)
+                                             :foreground ,(doom-color 'fg-alt)
+                                             :box (:line-width 2 :color ,(doom-color 'bg)
+                                                   :style released-button))))))
+
+;; Buffer grouping      
+(setq centaur-tabs-buffer-groups-function
+      (lambda ()
+        (cond
+         ((or (string-prefix-p "*" (buffer-name))
+              (memq major-mode '(magit-process-mode
+                                 magit-status-mode
+                                 magit-diff-mode)))
+          "Emacs")
+         ((eq major-mode 'dired-mode)
+          "Dired")
+         ((derived-mode-p 'prog-mode)
+          "Code")
+         ((derived-mode-p 'text-mode)
+          "Text")
+         (t
+          "Default"))))
+
+        (add-hook! '(+doom-dashboard-mode-hook +popup-buffer-mode-hook)
+  (defun my/disable-centaur-tabs-maybe-h ()
+    "Disable Centaur-tabs in special buffers."
+    (when (centaur-tabs-mode-on-p)
+      (centaur-tabs-local-mode))))
 
 ;;Project explorer
 (after! treemacs
