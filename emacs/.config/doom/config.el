@@ -81,14 +81,7 @@
   (treemacs-follow-mode 1)
   (treemacs-filewatch-mode 1)
   (treemacs-fringe-indicator-mode -1)
-
-  ;; Don't let treemacs steal focus
-  (treemacs-is-never-other-window t)
-
-  ;; Fixed width like VSCode
   (setq treemacs-width 32)
-
-  ;; Always open on project switch (but don't select it)
   (add-hook 'projectile-after-switch-project-hook
             (lambda ()
               (treemacs-add-and-display-current-project-exclusively)
