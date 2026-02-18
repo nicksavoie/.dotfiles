@@ -58,11 +58,12 @@
 
 ;;Scrolling
 (pixel-scroll-precision-mode 1)
-(setq scroll-conservatively 101       ;; never recenter point unnecessarily
-      scroll-margin 0                ;; no top/bottom margin
-      scroll-step 1                  ;; scroll one line at a time
-      mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;; scroll 1 line per wheel notch
-      mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-flip-direction t
+      mouse-wheel-follow-mouse t)
+(setq scroll-conservatively 101
+      scroll-margin 0)
 
 ;;Tab bar
 (after! (centaur-tabs projectile)
