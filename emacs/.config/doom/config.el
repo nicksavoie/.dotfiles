@@ -8,9 +8,6 @@
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'normal))
 (setq doom-variable-pitch-font (font-spec :family "Roboto" :size 14 :weight 'normal))
 (custom-set-faces '(org-link ((t (:underline nil)))))
-(setq scroll-conservatively 10
-      scroll-margin 15
-      pixel-scroll-precision-mode t)
 
 ;;Keybinds
 (cua-mode t) ;;Copy/Cut/Paste
@@ -75,7 +72,6 @@
         centaur-tabs-set-icons t)
   (setq centaur-tabs-buffer-list-function
         #'centaur-tabs-buffer-list)
-  (centaur-tabs-group-by-projectile-project)
   (setq centaur-tabs-show-new-tab-button nil)
   (centaur-tabs-headline-match)
 
@@ -89,6 +85,9 @@
       ((t (:inherit centaur-tabs-selected))))
     '(centaur-tabs-unselected-modified
       ((t (:inherit centaur-tabs-unselected))))))
+
+(after! projectile
+  (centaur-tabs-group-by-projectile-project))
 
 ;;Project explorer
 (after! treemacs
