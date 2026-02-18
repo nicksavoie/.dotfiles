@@ -56,15 +56,6 @@
 (define-key evil-normal-state-map (kbd "S-<up>") nil)
 (define-key evil-normal-state-map (kbd "S-<down>") nil)
 
-;;Scrolling
-(pixel-scroll-precision-mode 1)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-      mouse-wheel-progressive-speed nil
-      mouse-wheel-flip-direction t
-      mouse-wheel-follow-mouse t)
-(setq scroll-conservatively 101
-      scroll-margin 0)
-
 ;;Tab bar
 (after! (centaur-tabs projectile)
   (setq centaur-tabs-style "bar"            ;; keep flat base
