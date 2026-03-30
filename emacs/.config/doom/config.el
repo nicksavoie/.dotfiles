@@ -112,6 +112,10 @@
     (when (centaur-tabs-mode-on-p)
       (centaur-tabs-local-mode))))
 
+;; Stale project files fix
+(setq projectile-indexing-method 'alien
+      projectile-enable-caching nil)
+        
 ;;Project explorer
 (after! treemacs
   ;; --- Behavior ---
