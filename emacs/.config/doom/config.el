@@ -57,65 +57,19 @@
 (define-key evil-normal-state-map (kbd "S-<down>") nil)
 
 ;;Tab bar
-(after! (centaur-tabs projectile)
-  (setq centaur-tabs-style "bar"            ;; keep flat base
-      centaur-tabs-set-bar 'over         ;; underline active tab
-      centaur-tabs-height 30
-      centaur-tabs-set-icons t
-      centaur-tabs-close-button "✕"
-      centaur-tabs-modified-marker "•")
-  (custom-set-faces!
- ;; Default tabs
- '(centaur-tabs-default ((t (:background ,(doom-color 'bg)
-                                         :foreground ,(doom-color 'fg)
-                                         :box (:line-width 2 :color ,(doom-color 'bg)
-                                               :style released-button)
-                                         :overline nil
-                                         :underline nil
-                                         :strike-through nil
-                                         :weight normal))))
- ;; Selected tab
- '(centaur-tabs-selected ((t (:background ,(doom-color 'bg-alt)
-                                           :foreground ,(doom-color 'fg)
-                                           :box (:line-width 2 :color ,(doom-color 'fg)
-                                                 :style released-button)
-                                           :overline nil
-                                           :underline nil
-                                           :weight bold))))
- ;; Unselected tabs
- '(centaur-tabs-unselected ((t (:background ,(doom-color 'bg)
-                                             :foreground ,(doom-color 'fg-alt)
-                                             :box (:line-width 2 :color ,(doom-color 'bg)
-                                                   :style released-button))))))
-
-;; Buffer grouping      
-(setq centaur-tabs-buffer-groups-function
-      (lambda ()
-        (cond
-         ((or (string-prefix-p "*" (buffer-name))
-              (memq major-mode '(magit-process-mode
-                                 magit-status-mode
-                                 magit-diff-mode)))
-          "Emacs")
-         ((eq major-mode 'dired-mode)
-          "Dired")
-         ((derived-mode-p 'prog-mode)
-          "Code")
-         ((derived-mode-p 'text-mode)
-          "Text")
-         (t
-          "Default"))))
-
-        (add-hook! '(+doom-dashboard-mode-hook +popup-buffer-mode-hook)
-  (defun my/disable-centaur-tabs-maybe-h ()
-    "Disable Centaur-tabs in special buffers."
-    (when (centaur-tabs-mode-on-p)
-      (centaur-tabs-local-mode))))
+(after! (centaur-tabs)
+  (setq centaur-tabs-style "box"
+        centaur-tabs-set-bar 'none
+        centaur-tabs-height 24
+        centaur-tabs-set-icons t
+        centaur-tabs-close-button "✕"
+        centaur-tabs-modified-marker "•"))
 
 ;; Stale project files fix
-(setq projectile-indexing-method 'alien
-      projectile-enable-caching nil)
-        
+(after! projectile
+  (setq projectile-indexing-method 'alien
+        projectile-enable-caching nil))
+
 ;;Project explorer
 (after! treemacs
   ;; --- Behavior ---
@@ -151,34 +105,34 @@
       org-image-actual-width '(300))
 
 (setq org-roam-capture-templates
-       '(("f" "Fleeting" plain (file "./Roaming/Fleeting.org")
-           :if-new (file "./Roaming/${title}.org")
-           :immediate-finish t
-           :jump-to-captured t
-           :unnarrowed f)
-         ("r" "Reference" plain (file "./References/Reference.org")
-           :if-new (file "./References/${title}.org")
-           :immediate-finish t
-           :jump-to-captured t
-           :unnarrowed f)
-         ("m" "Map of Content" plain (file "./Concepts/MOP.org")
-           :if-new (file "./Concepts/${title}.org")
-           :immediate-finish t
-           :jump-to-captured t
-           :unnarrowed f)
+      '(("f" "Fleeting" plain (file "./Roaming/Fleeting.org")
+         :if-new (file "./Roaming/${title}.org")
+         :immediate-finish t
+         :jump-to-captured t
+         :unnarrowed f)
+        ("r" "Reference" plain (file "./References/Reference.org")
+         :if-new (file "./References/${title}.org")
+         :immediate-finish t
+         :jump-to-captured t
+         :unnarrowed f)
+        ("m" "Map of Content" plain (file "./Concepts/MOP.org")
+         :if-new (file "./Concepts/${title}.org")
+         :immediate-finish t
+         :jump-to-captured t
+         :unnarrowed f)
         ))
 
 (setq org-roam-dailies-capture-templates
-       '(("j" "Journal" plain " %?"
-          :target (file+datetree "%<%Y>.org" day)
-          :immediate-finish t
-          :jump-to-captured f
-          :unnarrowed t)
-         ("d" "Dream" entry "%<%d-%b-%Y>\n%?"
-          :if-new (file+datetree "Dreams.org" day)
-          :immediate-finish t
-          :jump-to-captured t
-          :unnarrowed f)
+      '(("j" "Journal" plain " %?"
+         :target (file+datetree "%<%Y>.org" day)
+         :immediate-finish t
+         :jump-to-captured f
+         :unnarrowed t)
+        ("d" "Dream" entry "%<%d-%b-%Y>\n%?"
+         :if-new (file+datetree "Dreams.org" day)
+         :immediate-finish t
+         :jump-to-captured t
+         :unnarrowed f)
         ))
 
 (use-package! websocket
