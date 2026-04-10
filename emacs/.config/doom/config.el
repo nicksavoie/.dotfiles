@@ -5,6 +5,7 @@
 (setq-default tab-width 2)
 (setq-default evil-shift-width 2)
 (setq display-line-numbers-type t)
+(setq mouse-highlight nil)
 
 ;;Theme
 (setq doom-theme 'catppuccin)
@@ -57,39 +58,72 @@
 (define-key evil-normal-state-map (kbd "S-<down>") nil)
 
 ;;Tab bar
-(after! (centaur-tabs)
-  (setq centaur-tabs-style "box"
-        centaur-tabs-set-bar 'none
-        centaur-tabs-height 24
+(after! centaur-tabs
+  (setq centaur-tabs-style "bar"
+        centaur-tabs-set-bar 'over
+        centaur-tabs-height 28
         centaur-tabs-set-icons t
         centaur-tabs-close-button "✕"
-        centaur-tabs-modified-marker "•"))
+        centaur-tabs-modified-marker "•")
+  (centaur-tabs-headline-match))
 
 ;; Stale project files fix
 (after! projectile
   (setq projectile-indexing-method 'alien
         projectile-enable-caching nil))
 
+;; Tiling window fix
+(after! corfu
+  (setq corfu-auto t)
+  (setq corfu-popupinfo-delay '(0.5 . 0.2))
+  (setq x-gtk-resize-child-frames 'resize-mode))
+
+;; Text Centering
+(use-package! visual-fill-column
+  :hook (prog-mode . my/auto-center)
+  :config
+  (defun my/auto-center ()
+    (when (> (frame-width) 140)
+      (setq visual-fill-column-width 120
+            visual-fill-column-center-text t)
+      (visual-fill-column-mode 1))))
+
 ;;Project explorer
 (after! treemacs
-  ;; --- Behavior ---
   (treemacs-follow-mode 1)
   (treemacs-filewatch-mode 1)
   (treemacs-fringe-indicator-mode -1)
   (setq treemacs-width 32)
+
+  (defun my/treemacs-auto-toggle ()
+    "Open treemacs when maximized, close when small."
+    (let ((wide (> (frame-width) 140)))
+      (if wide
+          (unless (treemacs-get-local-window)
+            (treemacs-add-and-display-current-project-exclusively)
+            (other-window 1))
+        (when (treemacs-get-local-window)
+          (treemacs-quit)))))
+
+  (add-hook 'window-size-change-functions
+            (lambda (_frame) (my/treemacs-auto-toggle)))
+
   (add-hook 'projectile-after-switch-project-hook
             (lambda ()
-              (treemacs-add-and-display-current-project-exclusively)
+              (my/treemacs-auto-toggle)
               (other-window 1))))
 
 ;;Breadcrumbs
-(setq lsp-headerline-breadcrumb-enable t)
-(setq which-func-unknown "⊘")
-(setq-default header-line-format
-              '(:eval
-                (when (bound-and-true-p which-function-mode)
-                  (format "  %s"
-                          (or (which-function) "")))))
+(after! lsp-mode
+  (setq lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-enable-symbol-numbers nil
+        lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode))
+(add-hook 'window-configuration-change-hook
+          (lambda ()
+            (when (and (not (bound-and-true-p lsp-mode))
+                       (not (bound-and-true-p which-function-mode)))
+              (setq-local header-line-format nil))))
 
 ;;Nix
 (after! nix-mode
