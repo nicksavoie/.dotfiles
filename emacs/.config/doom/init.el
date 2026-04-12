@@ -67,7 +67,7 @@
  yaml                           ; JSON, but readable
  latex                          ; writing papers in Emacs has never been so fun
  markdown                       ; writing docs for people to ignore
- (org +roam +dragndrop +pretty +pandoc +present +gnuplot) ; organize your plain life in plain text
+ (org +roam +dragndrop +pretty +pandoc +gnuplot) ; organize your plain life in plain text
  (cc +lsp +tree-sitter)         ; C > C++ == 1
  (nix +lsp +tree-sitter)        ; I hereby declare "nix geht mehr!"
  ;;(rust +lsp)                    ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
