@@ -69,7 +69,7 @@
  markdown                       ; writing docs for people to ignore
  (org +roam +dragndrop +pretty +pandoc +gnuplot) ; organize your plain life in plain text
  (cc +lsp +tree-sitter)         ; C > C++ == 1
- (nix +lsp +tree-sitter)        ; I hereby declare "nix geht mehr!"
+ (nix +lsp)                     ; I hereby declare "nix geht mehr!"
  ;;(rust +lsp)                    ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
  ;;(go +lsp)                      ; the hipster dialect
  ;;(csharp +lsp)                  ; unity, .NET, and mono shenanigans
