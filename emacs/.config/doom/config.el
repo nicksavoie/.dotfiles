@@ -31,6 +31,12 @@
 (setq select-enable-clipboard t
       select-enable-primary t
       save-interprogram-paste-before-kill t)
+;; Delete without yanking
+(defun my/evil-delete-without-yank (orig-fn beg end &optional type _ &rest args)
+  (apply orig-fn beg end type ?_ args))
+
+(advice-add 'evil-delete :around #'my/evil-delete-without-yank)
+(advice-add 'evil-delete-char :around #'my/evil-delete-without-yank)
 (setq-default shift-select-mode t) ;;Shift+arrows select
 (setq-default delete-selection-mode t) ;;Typing replaces selection
 (map! :nvi
