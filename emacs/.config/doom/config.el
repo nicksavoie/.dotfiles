@@ -21,8 +21,8 @@
 (map! :leader
       :desc "Set Catppuccin flavor"
       "t C" #'my/set-catppuccin)
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'normal))
-(setq doom-variable-pitch-font (font-spec :family "Roboto" :size 14 :weight 'normal))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'normal))
+(setq doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 16 :weight 'normal))
 
 ;;Keybinds
 (cua-mode t) ;;Copy/Cut/Paste
