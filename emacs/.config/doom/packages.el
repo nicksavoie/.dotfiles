@@ -3,4 +3,3 @@
 
 (package! catppuccin-theme)
 (package! drag-stuff)
-(package! org-roam-ui)
