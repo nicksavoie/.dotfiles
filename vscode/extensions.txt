@@ -1,0 +1,15 @@
+catppuccin.catppuccin-vsc
+catppuccin.catppuccin-vsc-icons
+vscodevim.vim
+streetsidesoftware.code-spell-checker
+streetsidesoftware.code-spell-checker-canadian-english
+ms-vscode-remote.remote-wsl
+editorconfig.editorconfig
+davidanson.vscode-markdownlint
+nhoizey.gremlins
+github.vscode-pull-request-github
+ms-vscode.cpptools
+ms-vscode.cmake-tools
+ms-python.python
+ms-python.black-formatter
+rust-lang.rust-analyzer

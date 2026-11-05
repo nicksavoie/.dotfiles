@@ -1,0 +1,79 @@
+{
+  // Appearance: Catppuccin Mocha and JetBrains Mono, matching the rest of my setup.
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-mocha",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrains Mono', Consolas, monospace",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.guides.indentation": true,
+  "editor.bracketPairColorization.enabled": true,
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
+  "workbench.startupEditor": "none",
+  "window.menuBarVisibility": "toggle",
+  "breadcrumbs.enabled": true,
+
+  // Editing
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  // Per-language overrides for the work toolchain
+  "[python]": { "editor.tabSize": 4, "editor.defaultFormatter": "ms-python.black-formatter" },
+  "[rust]": { "editor.tabSize": 4, "editor.defaultFormatter": "rust-lang.rust-analyzer" },
+  "[c]": { "editor.tabSize": 4, "editor.defaultFormatter": "ms-vscode.cpptools" },
+  "[cpp]": { "editor.tabSize": 4, "editor.defaultFormatter": "ms-vscode.cpptools" },
+  "[markdown]": { "editor.wordWrap": "on", "editor.formatOnSave": false },
+
+  // Spelling: Canadian English.
+  "cSpell.language": "en-CA",
+
+  // WSL is the main shell; the Windows shell stays available as a second profile.
+  "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+
+  // Vim keys, with the Doom Emacs habits kept: Space leader, CUA shortcuts handled
+  // by VSCode, and deleting never overwrites the clipboard.
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "vim.easymotion": false,
+  "vim.hlsearch": true,
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-c>": false,
+    "<C-f>": false,
+    "<C-s>": false,
+    "<C-v>": false,
+    "<C-x>": false,
+    "<C-z>": false
+  },
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["d"], "after": ["\"", "_", "d"] },
+    { "before": ["D"], "after": ["\"", "_", "D"] },
+    { "before": ["x"], "after": ["\"", "_", "x"] },
+    { "before": ["<leader>", "f", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "f", "s"], "commands": ["workbench.action.files.save"] },
+    { "before": ["<leader>", "b", "b"], "commands": ["workbench.action.showAllEditors"] },
+    { "before": ["<leader>", "b", "k"], "commands": ["workbench.action.closeActiveEditor"] },
+    { "before": ["<leader>", "p", "p"], "commands": ["workbench.action.openRecent"] },
+    { "before": ["<leader>", "/"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "o", "p"], "commands": ["workbench.view.explorer"] },
+    { "before": ["<leader>", "g", "g"], "commands": ["workbench.view.scm"] },
+    { "before": ["<leader>", "c", "f"], "commands": ["editor.action.formatDocument"] },
+    { "before": ["<leader>", "c", "a"], "commands": ["editor.action.quickFix"] },
+    { "before": ["<leader>", "c", "r"], "commands": ["editor.action.rename"] },
+    { "before": ["<leader>", "`"], "commands": ["workbench.action.terminal.toggleTerminal"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    { "before": ["d"], "after": ["\"", "_", "d"] },
+    { "before": ["x"], "after": ["\"", "_", "x"] }
+  ]
+}

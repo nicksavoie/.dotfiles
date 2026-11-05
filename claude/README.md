@@ -1,0 +1,19 @@
+# Claude Code setup
+
+How I configure Claude Code and the skills I rebuild first on a new machine. These are
+recipes, not copies: each one says what the thing is for, where it lives and what goes in
+it, so it can be rebuilt for a different project in a few minutes.
+
+| Guide | What it covers |
+|---|---|
+| [skills-anatomy.md](skills-anatomy.md) | The shape of a skill: file layout, frontmatter, writing a description that triggers |
+| [claude-md-patterns.md](claude-md-patterns.md) | The rules I put in a project `CLAUDE.md` and why |
+| [settings.md](settings.md) | `settings.json`: effort, permissions, status line |
+| [skills/batch-edit.md](skills/batch-edit.md) | Large changes by dry-run script, with a small context |
+| [skills/recap.md](skills/recap.md) | "Catch me up" from git history, flagging stale notes |
+| [skills/project-from-idea.md](skills/project-from-idea.md) | Turn a rambling idea into a scoped project note |
+| [skills/downloads-triage.md](skills/downloads-triage.md) | Sort a folder of mixed files without touching the source |
+
+The principle behind all of them: the model is fast and tireless, so the setup spends its
+effort on keeping changes reviewable. Anything that writes in bulk gets a dry run and a
+rollback point first, and anything ambiguous gets flagged instead of silently resolved.

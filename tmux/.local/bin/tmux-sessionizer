@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Pick a project directory with fzf, then create or switch to a tmux session for it.
+# Mirrors the tmux-sessionizer in the NixOS config; the project roots differ.
+#
+# Candidates are the roots themselves plus every directory one level below them.
+# Override the roots with SESSIONIZER_ROOTS (colon-separated).
+set -euo pipefail
+
+IFS=':' read -ra roots <<< "${SESSIONIZER_ROOTS:-$HOME/code:$HOME/projects}"
+
+if [ $# -eq 1 ]; then
+  selected=$1
+else
+  existing=()
+  for root in "${roots[@]}"; do
+    [ -d "$root" ] && existing+=("$root")
+  done
+  [ ${#existing[@]} -gt 0 ] || { echo "No roots found: ${roots[*]}" >&2; exit 1; }
+  selected=$(find "${existing[@]}" -mindepth 0 -maxdepth 1 -type d | fzf)
+fi
+
+[ -n "${selected:-}" ] || exit 0
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux || true)
+
+if [ -z "${TMUX:-}" ] && [ -z "$tmux_running" ]; then
+  tmux new-session -s "$selected_name" -c "$selected"
+  exit 0
+fi
+
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+  tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+if [ -z "${TMUX:-}" ]; then
+  tmux attach-session -t "$selected_name"
+else
+  tmux switch-client -t "$selected_name"
+fi

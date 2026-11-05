@@ -1,0 +1,30 @@
+── Prefix: C-b (tmux default, not remapped) ──
+
+── Sessions/Projects ──────────────────
+prefix f         Sessionizer: pick/create/switch project session
+prefix d         Detach
+prefix s         List/choose sessions
+prefix $         Rename session
+
+── Windows ────────────────────────────
+prefix c         New window
+prefix ,         Rename window
+prefix n / p     Next / previous window
+prefix 0-9       Switch to window N
+prefix w         List windows
+
+── Panes ──────────────────────────────
+prefix |         Split left/right (keeps the current directory)
+prefix -         Split top/bottom (keeps the current directory)
+prefix arrows    Move between panes
+prefix z         Zoom/unzoom pane
+prefix x         Kill pane
+
+── Copy mode (vi keys) ────────────────
+prefix [         Enter copy mode
+v / y            Select / copy (vi-style)
+prefix ]         Paste
+
+── Misc ───────────────────────────────
+prefix ?         This cheatsheet
+Mouse            Click to select pane/window, drag to resize

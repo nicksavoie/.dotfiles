@@ -1,14 +1,4 @@
-#Zsh Config, while ignoring temp caches
-/zsh/.config/zsh/*
-!/zsh/.config/zsh/.zshenv
-!/zsh/.config/zsh/.zprofile
-!/zsh/.config/zsh/.zshrc
-!/zsh/.config/zsh/.zlogin
-!/zsh/.config/zsh/.zlogout
-!/zsh/.config/zsh/.p10k.zsh
-
-#Emacs Config
-/emacs/.emacs.d/eln-cache
-/emacs/.emacs.d/tutorial
-/emacs/.emacs.d/auto-save-list
-/emacs/.config/emacs/
+# Machine-local files that should never be committed
+*.bak
+.DS_Store
+Thumbs.db
