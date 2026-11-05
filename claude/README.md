@@ -1,14 +1,19 @@
 # Claude Code setup
 
 How I configure Claude Code and the skills I rebuild first on a new machine. These are
-recipes, not copies: each one says what the thing is for, where it lives and what goes in
-it, so it can be rebuilt for a different project in a few minutes.
+recipes: each one says what the thing is for, where it lives and what goes in it, so it can
+be rebuilt for a different project or a different person in a few minutes. Start with
+[vault-setup.md](vault-setup.md) to build a whole vault.
 
 | Guide | What it covers |
 |---|---|
+| [vault-setup.md](vault-setup.md) | Build a Git + Obsidian + Claude vault from scratch (with a [bootstrap script](vault-starter/bootstrap.sh)) |
 | [skills-anatomy.md](skills-anatomy.md) | The shape of a skill: file layout, frontmatter, writing a description that triggers |
 | [claude-md-patterns.md](claude-md-patterns.md) | The rules I put in a project `CLAUDE.md` and why |
 | [settings.md](settings.md) | `settings.json`: effort, permissions, status line |
+| [statusline/](statusline/) | The status line script and how it works |
+| [skills/session-checkpoint.md](skills/session-checkpoint.md) | Handoff file so the next session starts warm |
+| [skills/daily-weekly-horizon.md](skills/daily-weekly-horizon.md) | `today`, `weekly-review` and `horizon`: what now, this week, the long game |
 | [skills/batch-edit.md](skills/batch-edit.md) | Large changes by dry-run script, with a small context |
 | [skills/recap.md](skills/recap.md) | "Catch me up" from git history, flagging stale notes |
 | [skills/project-from-idea.md](skills/project-from-idea.md) | Turn a rambling idea into a scoped project note |
