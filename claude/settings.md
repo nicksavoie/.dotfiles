@@ -35,3 +35,34 @@ edit the file directly.
 - **Status line:** a script that reads JSON on stdin and prints one line. Keep it quiet;
   directory and git state on the focused line are enough.
 - **Project overrides:** `.claude/settings.json` in a repo overrides these for that repo.
+
+## Project hooks (auto-commit safety net)
+
+A project-level `.claude/settings.json` can run a hook when a session ends. This one
+commits any uncommitted work in the vault, so a bare `/clear` never leaves the history
+behind the working tree. No rebuild is needed; the file is tracked with the vault.
+
+```json
+{
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/auto-commit.sh\"",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Copy [hooks/auto-commit.sh](hooks/auto-commit.sh) to `.claude/hooks/` in the vault. It
+only acts when the session's directory is inside a git repo that contains
+`Meta/AI Context/Session Bridge.md`, skips during a merge or rebase, never touches a
+remote, always exits 0, and logs each run to `~/.cache/vault-auto-commit.log`. It needs
+`jq` and `git` on the PATH. Test it against a scratch repo before enabling it, and read
+the log after the first real `/clear` to confirm `SessionEnd` fired.

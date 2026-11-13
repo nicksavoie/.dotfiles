@@ -44,6 +44,22 @@ The handoff file is `Meta/AI Context/Session Bridge.md` in the vault layout from
    - `## Suggested edits not yet made`: anything noticed that belongs in a real note but
      needs the user's sign-off. Name the file and the change.
 8. **Report the one-line gist** back, so the user does not have to open the file.
+9. **Commit, with no further prompt.** `git add -A`, then one local commit titled
+   `Session checkpoint: <thread names>`. Say `Committed <hash>; ready to /clear.` Never
+   push. The user's standing permission and the trigger phrase are the yes; do not ask.
+
+Widen the skill's `description` so natural phrases trigger it: "goodnight", "going to
+bed", "clearing", "clear context", "done for now", "heading out", "wrapping up", plus the
+originals. Typing a trigger phrase is cheaper than typing "checkpoint" and "commit" as
+two prompts every session.
+
+## Safety net for a bare `/clear`
+
+`/clear` is a built-in command the CLI handles itself, so the skill cannot run before it.
+A `SessionEnd` hook can still commit any dirty work: see
+[../hooks/auto-commit.sh](../hooks/auto-commit.sh) and the project-settings example in
+[../settings.md](../settings.md). It cannot update the handoff file (that needs the
+model), so say a trigger phrase first when the handoff should be current.
 
 ## Rules
 
