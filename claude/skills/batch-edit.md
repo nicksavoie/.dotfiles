@@ -23,7 +23,7 @@ description: Use for any change touching more than ~10 files - a big migration, 
 4. **Apply only after a yes.** Never reset, clean, restore or push; rollback is the human's
    call, even if the batch looks wrong afterwards.
 5. **Report after applying:** files changed, the `git diff --stat` summary, anything
-   skipped and why.
+   skipped and why, plus the last line of `scripts/mess-report.sh` (new notes, shrunk notes, lost links).
 
 ## Keeping context small
 

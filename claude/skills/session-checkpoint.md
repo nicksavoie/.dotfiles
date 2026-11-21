@@ -44,7 +44,7 @@ The handoff file is `Meta/AI Context/Session Bridge.md` in the vault layout from
    - `## Suggested edits not yet made`: anything noticed that belongs in a real note but
      needs the user's sign-off. Name the file and the change.
 8. **Report the one-line gist** back, so the user does not have to open the file.
-9. **Commit, with no further prompt.** `git add -A`, then one local commit titled
+9. **Mess report, then commit, with no further prompt.** First run `scripts/mess-report.sh` (see `mess-report.md`) and put its last line in the report; ask one plain question about a shrunk note or lost link the session did not intend. Then `git add -A`, then one local commit titled
    `Session checkpoint: <thread names>`. Say `Committed <hash>; ready to /clear.` Never
    push. The user's standing permission and the trigger phrase are the yes; do not ask.
 

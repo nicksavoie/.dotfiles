@@ -14,7 +14,11 @@ be rebuilt for a different project or a different person in a few minutes. Start
 | [statusline/](statusline/) | The status line script and how it works |
 | [skills/session-checkpoint.md](skills/session-checkpoint.md) | Handoff file so the next session starts warm |
 | [skills/daily-weekly-horizon.md](skills/daily-weekly-horizon.md) | `today`, `weekly-review` and `horizon`: what now, this week, the long game |
+| [skills/idea-parking.md](skills/idea-parking.md) | Park side ideas in one line mid-task, then drain them in short guided passes |
 | [skills/batch-edit.md](skills/batch-edit.md) | Large changes by dry-run script, with a small context |
+| [skills/mess-report.md](skills/mess-report.md) | Measure new notes, shrunk notes and lost links after a task |
+| [skills/model-choice.md](skills/model-choice.md) | One-line nudge to use the stronger model for design work, and how to measure it |
+| [skills/live-prototype.md](skills/live-prototype.md) | Prove a UI or config change live with commands before writing it into the system config |
 | [skills/recap.md](skills/recap.md) | "Catch me up" from git history, flagging stale notes |
 | [skills/project-from-idea.md](skills/project-from-idea.md) | Turn a rambling idea into a scoped project note |
 | [skills/downloads-triage.md](skills/downloads-triage.md) | Sort a folder of mixed files without touching the source |
