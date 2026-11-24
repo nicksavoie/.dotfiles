@@ -19,6 +19,7 @@ be rebuilt for a different project or a different person in a few minutes. Start
 | [skills/mess-report.md](skills/mess-report.md) | Measure new notes, shrunk notes and lost links after a task |
 | [skills/model-choice.md](skills/model-choice.md) | One-line nudge to use the stronger model for design work, and how to measure it |
 | [skills/live-prototype.md](skills/live-prototype.md) | Prove a UI or config change live with commands before writing it into the system config |
+| [skills/session-card.md](skills/session-card.md) | A `SessionStart` hook: a short "where you are" card and one rotating tip on the first reply ([hook](hooks/session-card.sh), [tips starter](tips-starter.md)) |
 | [skills/recap.md](skills/recap.md) | "Catch me up" from git history, flagging stale notes |
 | [skills/project-from-idea.md](skills/project-from-idea.md) | Turn a rambling idea into a scoped project note |
 | [skills/downloads-triage.md](skills/downloads-triage.md) | Sort a folder of mixed files without touching the source |
